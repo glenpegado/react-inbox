@@ -1,20 +1,22 @@
-import React, { Component } from 'react'
-import Message from './Message'
-
+import React, { Component } from 'react';
+import Message from './Message';
 
 class Messages extends Component {
-
   render() {
-    const {messages} = this.props
+    const { messages, toggleStar, toggleSelect } = this.props;
     return (
-      <div className="MessagesComponent">
+      <div className="Messages">
         {messages.map(message => (
-          <Message/ >
-
+          <Message
+            key={message.id}
+            message={message}
+            toggleStar={toggleStar}
+            toggleSelect={toggleSelect}
+          />
         ))}
       </div>
-    )
+    );
   }
 }
 
-export default Messages
+export default Messages;
