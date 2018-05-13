@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-class Toolbar extends Component {
+class ToolbarComponent extends Component {
   render() {
     const {
       messages,
@@ -8,24 +8,23 @@ class Toolbar extends Component {
       markReadStatus,
       deleteMessages,
       applyLabel,
-      removeLabel
-    } = this.props;
+      removeLabel,
+      showComposeMessage
+    } = this.props
+    let unreadCount = messages.filter(message => !message.read).length
+    const selectedCount = messages.filter(message => message.selected).length
 
-    let unreadCount = messages.filter(message => !message.read).length;
-    const selectedCount = messages.filter(message => message.selected).length;
-    let selectAllClass;
-
+    let selectAllClass
     switch (selectedCount) {
       case 0:
-        selectAllClass = 'fa-square-o';
-        break;
+        selectAllClass = 'fa-square-o'
+        break
       case messages.length:
-        selectAllClass = 'fa-check-square-o';
-        break;
+        selectAllClass = 'fa-check-square-o'
+        break
       default:
-        selectAllClass = 'fa-minus-square-o';
+        selectAllClass = 'fa-minus-square-o'
     }
-
     return (
       <div className="row toolbar">
         <div className="col-md-12">
@@ -33,6 +32,9 @@ class Toolbar extends Component {
             <span className="badge badge">{unreadCount}</span>
             unread messages
           </p>
+          <a onClick={() => showComposeMessage()} className="btn btn-danger">
+            <i className="fa fa-plus" />
+          </a>
 
           <button className="btn btn-default" onClick={toggleSelectAll}>
             <i className={`fa ${selectAllClass}`} />
@@ -40,15 +42,15 @@ class Toolbar extends Component {
 
           <button
             className="btn btn-default"
-            onClick={() => markReadStatus(true)}
-            disabled={selectedCount === 0}>
+            disabled={selectedCount === 0}
+            onClick={() => markReadStatus(true)}>
             Mark As Read
           </button>
 
           <button
             className="btn btn-default"
-            onClick={() => markReadStatus(false)}
-            disabled={selectedCount === 0}>
+            disabled={selectedCount === 0}
+            onClick={() => markReadStatus(false)}>
             Mark As Unread
           </button>
 
@@ -56,8 +58,8 @@ class Toolbar extends Component {
             className="form-control label-select"
             disabled={selectedCount === 0}
             onChange={e => {
-              applyLabel(e.target.value);
-              e.target.selectedIndex = 0;
+              applyLabel(e.target.value)
+              e.target.selectedIndex = 0
             }}>
             <option>Apply label</option>
             <option value="dev">dev</option>
@@ -69,8 +71,8 @@ class Toolbar extends Component {
             className="form-control label-select"
             disabled={selectedCount === 0}
             onChange={e => {
-              removeLabel(e.target.value);
-              e.target.selectedIndex = 0;
+              removeLabel(e.target.value)
+              e.target.selectedIndex = 0
             }}>
             <option>Remove label</option>
             <option value="dev">dev</option>
@@ -79,15 +81,15 @@ class Toolbar extends Component {
           </select>
 
           <button
-            className="btn btn-default"
-            onClick={deleteMessages}
-            disabled={selectedCount === 0}>
+            disabled={selectedCount === 0}
+            onClick={() => deleteMessages()}
+            className="btn btn-default">
             <i className="fa fa-trash-o" />
           </button>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Toolbar;
+export default ToolbarComponent
